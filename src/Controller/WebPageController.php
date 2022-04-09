@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Message;
+use App\Form\MessageType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WebPageController extends AbstractController
 {
@@ -13,8 +15,10 @@ class WebPageController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('web_page/index.html.twig', [
-            'controller_name' => 'WebPageController',
+        $mesage = new Message();
+        $contactForm = $this->createForm(MessageType::class, $mesage);
+        return $this->render('web_page/contact.html.twig', [
+            'contactForm' => $contactForm->createView()
         ]);
     }
 }

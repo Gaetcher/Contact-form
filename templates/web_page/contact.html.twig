@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact-form{% endblock %}
+
+{% block body %}
+<pre>
+    {{ dump() }}
+</pre>
+    {{ form_start(contactForm, {'attr': {'id': 'contact-form'}}) }}
+    {{ form_rest(contactForm) }}
+    {{ form_end(contactForm) }}
+{% endblock %}

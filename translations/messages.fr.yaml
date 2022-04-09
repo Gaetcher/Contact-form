@@ -1,0 +1,8 @@
+app:
+  form:
+    firstname: Prénom
+    lastname: Nom
+    email: E-mail
+    subject: Objet
+    message: Message
+    submit: Envoyer
