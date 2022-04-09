@@ -54,7 +54,7 @@ class Message
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isProcessed;
+    private $isProcessed = false;
 
     /**
      * @ORM\Column(type="datetime_immutable")

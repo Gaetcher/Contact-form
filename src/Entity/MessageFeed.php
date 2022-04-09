@@ -42,6 +42,9 @@ class MessageFeed
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable(); // TODO set up Gedmo Timestampable instead
+        $this->updatedAt = new \DateTimeImmutable(); // TODO set up Gedmo Timestampable instead
+
     }
 
     public function getId(): ?int
