@@ -1,0 +1,85 @@
+{% for messageFeed in messageFeeds %}
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="{{ 'messageFeed' ~ loop.index }}">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ 'collpase-' ~ loop.index }}" aria-expanded="false" aria-controls="{{ 'collpase-' ~ loop.index }}">
+				{{ messageFeed.email|striptags }}
+				-
+				{{ messageFeed.updatedAt|date("d/m/Y - H:i") }}
+			</button>
+		</h2>
+		<div id="{{ 'collpase-' ~ loop.index }}" class="accordion-collapse collapse" aria-labelledby="{{ 'messageFeed' ~ loop.index }}">
+			<div class="accordion-body">
+				<table class="table stable-striped table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Date</th>
+							<th scope="col">Nom</th>
+							<th scope="col">Prénom</th>
+							<th scope="col">Objet</th>
+							<th scope="col">E-mail</th>
+							<th scope="col">Message</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for message in messageFeed.messages|sort((b, a) => a.createdAt <=> b.createdAt) %}
+							<tr data-bs-toggle="modal" data-bs-target="{{ "#message-modal-" ~ message.id }}">
+								<th scope="row">{{ message.createdAt|date("d/m/Y - H:i") }}</th>
+								<td>{{ message.lastname|striptags }}</td>
+								<td>{{ message.firstname|striptags }}</td>
+								<td>{{ message.subject|striptags }}</td>
+								<td>
+									<a href="mailto:{{ message.email|striptags }}">{{ message.email|striptags }}</a>
+								</td>
+								<td>{{ message.message|striptags|u.truncate(100) }}... -
+									<b>Voir le message complet</b>
+								</td>
+								<td>TODO</td>
+							</tr>
+							<!-- Modal -->
+							<div class="modal fade" id="{{ "message-modal-" ~ message.id }}" tabindex="-1" aria-labelledby="{{ "message-modal-label-" ~ message.id }}" aria-hidden="true">
+								<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="{{ "message-modal-label-" ~ message.id }}">De :
+												{{ message.lastname|striptags }}
+												-
+												{{ message.createdAt|date("d/m/Y - H:i") }}</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<h2>Demande de contact</h2>
+											<p>
+												<b>Nom :</b>
+												{{ message.lastname|striptags }}</p>
+											<p>
+												<b>Prénom :</b>
+												{{ message.firstname|striptags }}</p>
+											<p>
+												<b>E-mail :</b>
+												{{ message.email|striptags }}</p>
+											<p>
+												<b>Objet :</b>
+												{{ message.subject|striptags }}
+											</p>
+											<p>
+												<b>Message :</b>
+											</p>
+											<p>
+												{{ message.message|striptags }}
+											</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+											<a href="{{ 'mailto:' ~ message.email|striptags }}" type="button" class="btn btn-success">Répondre</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endfor %}

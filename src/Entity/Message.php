@@ -20,7 +20,7 @@ class Message
 
     /**
      * @ORM\Column(type="string", length=160, nullable=true)
-     * @Assert\Length(min=2, max=160)
+     * @Assert\Length(max=160)
      */
     private $firstname;
 

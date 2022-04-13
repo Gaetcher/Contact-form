@@ -1,20 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Hello AdminController!
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('admin') }}
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div class="page page--admin">
+		<main class="container">
+			<div class="row">
+			<h1>Liste des messages</h1>
+				<div class="accordion" id="feed-container">
+					{% include "admin/includes/_message_feed.html.twig" with { 'messageFeeds' : messageFeeds } only %}
+				</div>
+				{% if maxPagination is defined and maxPagination > 1 %}
+					<nav class="row mt-4 mx-auto" aria-label="Pagination">
+						<ul class="pagination">
+							<li id="page-prev" class="page-item" data-page="{{ paginationActive - 1 }}" data-maxpagination="{{ maxPagination }}">
+								<a class="page-link" href="#" rel="prev">Précédent</a>
+							</li>
+							{% for item in 1..maxPagination %}
+								<li class="page-item {{ loop.index == 1 ? 'active' : '' }}" data-page="{{ loop.index }}" data-maxpagination="{{ maxPagination }}">
+									<a class="page-link" href="#" >{{ loop.index }}</a>
+								</li>
+							{% endfor %}
+							<li id="page-next" class="page-item" data-page="{{ paginationActive + 1 }}" data-maxpagination="{{ maxPagination }}">
+								<a class="page-link" href="#" rel="next">Suivant</a>
+							</li>
+						</ul>
+					</nav>
+				{% endif %}
+			</div>
+		</main>
+	</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/gaetancheret/Workspace/project/contact-form/contact-form/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/gaetancheret/Workspace/project/contact-form/contact-form/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}

@@ -45,6 +45,35 @@ class MessageFeedRepository extends ServiceEntityRepository
         }
     }
 
+    public function findMaxPagination($limit = 10)
+    {
+        $count = $this->createQueryBuilder('messageFeed')
+            ->select('count(messageFeed.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        if ($count == 0) {
+            return $count;
+        }
+
+        $maxPagination = ceil($count / $limit);
+
+        return $maxPagination;
+    }
+
+    public function selectByPagination($pagination = 1, $limit = 10)
+    {
+        $start = ($pagination * $limit) - $limit;
+
+        $queryBuilder = $this->createQueryBuilder('messageFeed')
+            ->orderBy('messageFeed.updatedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($start)
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     // /**
     //  * @return MessageFeed[] Returns an array of MessageFeed objects
     //  */
