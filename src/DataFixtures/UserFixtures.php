@@ -25,7 +25,8 @@ class UserFixtures extends Fixture
         $user->setEmail('contact@form.fr');
         
         $hash_password = $this->passwordHasher->hashPassword($user, 'admin');
-        $user->setPassword($hash_password);
+        $user->setPassword($hash_password)
+            ->setToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
 
         $manager->persist($user);
         $manager->flush();

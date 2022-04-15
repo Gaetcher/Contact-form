@@ -16,6 +16,7 @@ const displayFeeds = (data) => {
 const getMessageFeeds = (pageLink) => {
     const ajaxUrl = '/admin/ajax-pagination',
         content = {
+            uToken: uToken,
             pageRequested: parseInt(pageLink.dataset.page),
         };
         

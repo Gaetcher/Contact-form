@@ -4,6 +4,10 @@
 {% endblock %}
 
 {% block javascripts %}
+
+	<script>
+		const uToken = "{{ app.user.token }}"
+	</script>
 	{{ parent() }}
 	{{ encore_entry_script_tags('admin') }}
 {% endblock %}
@@ -13,6 +17,9 @@
 		<main class="container">
 			<div class="row">
 			<h1>Liste des messages</h1>
+				<pre>
+					{{ dump(app.user) }}
+				</pre>
 				<div class="accordion" id="feed-container">
 					{% include "admin/includes/_message_feed.html.twig" with { 'messageFeeds' : messageFeeds } only %}
 				</div>

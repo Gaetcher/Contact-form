@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\MessageFeedRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin", name="admin_")
@@ -34,9 +36,20 @@ class AdminController extends AbstractController
     /**
      * @Route("/ajax-pagination", name="ajax_pagination")
      */
-    public function ajaxPagination(Request $request, MessageFeedRepository $messageFeedRepository): Response
+    public function ajaxPagination(Request $request, EntityManagerInterface $entityManager, MessageFeedRepository $messageFeedRepository): Response
     {
         $decodedRequest = json_decode($request->getContent(), true);
+        $userFromRequestExists = $entityManager->getRepository(User::class)->findOneBy(['token' => $decodedRequest['uToken']]);
+        
+        if (!$userFromRequestExists) {
+            return new JsonResponse([
+                'error' => [
+                    'code' => '404',
+                    'message' => 'Resource not found'
+                ]
+            ], 404);
+        }
+
         $pageRequested = $decodedRequest['pageRequested'];
         $maxPagination = $messageFeedRepository->findMaxPagination();
         
