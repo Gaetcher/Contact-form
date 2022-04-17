@@ -3,8 +3,12 @@
 {% block title %}Hello AdminController!
 {% endblock %}
 
-{% block javascripts %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('admin') }}
+{% endblock %}
 
+{% block javascripts %}
 	<script>
 		const uToken = "{{ app.user.token }}"
 	</script>
@@ -16,10 +20,7 @@
 	<div class="page page--admin">
 		<main class="container">
 			<div class="row">
-			<h1>Liste des messages</h1>
-				<pre>
-					{{ dump(app.user) }}
-				</pre>
+				<h1>Liste des messages</h1>
 				<div class="accordion" id="feed-container">
 					{% include "admin/includes/_message_feed.html.twig" with { 'messageFeeds' : messageFeeds } only %}
 				</div>
@@ -31,7 +32,7 @@
 							</li>
 							{% for item in 1..maxPagination %}
 								<li class="page-item {{ loop.index == 1 ? 'active' : '' }}" data-page="{{ loop.index }}" data-maxpagination="{{ maxPagination }}">
-									<a class="page-link" href="#" >{{ loop.index }}</a>
+									<a class="page-link" href="#">{{ loop.index }}</a>
 								</li>
 							{% endfor %}
 							<li id="page-next" class="page-item" data-page="{{ paginationActive + 1 }}" data-maxpagination="{{ maxPagination }}">

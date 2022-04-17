@@ -1,0 +1,35 @@
+.table {
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .action {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 1.5rem;
+
+        .status-toggler {
+            white-space: nowrap;
+        }
+
+        .status-display {
+            width: 2.5rem;
+        }
+
+        .fa-check {
+            color: green;
+        }
+
+        .fa-xmark {
+            color: red;
+        }
+
+        .spinner-border {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
