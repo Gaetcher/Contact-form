@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MessageRepository;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Message
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -56,21 +59,12 @@ class Message
      */
     private $isProcessed = false;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=MessageFeed::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $messageFeed;
-
-    public function __construct()
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
 
     public function getId(): ?int
     {
@@ -145,18 +139,6 @@ class Message
     public function setIsProcessed(bool $isProcessed): self
     {
         $this->isProcessed = $isProcessed;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageFeedRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MessageFeedRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=MessageFeedRepository::class)
  */
 class MessageFeed
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,21 +32,9 @@ class MessageFeed
      */
     private $messages;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $updatedAt;
-
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable(); // TODO set up Gedmo Timestampable instead
-        $this->updatedAt = new \DateTimeImmutable(); // TODO set up Gedmo Timestampable instead
 
     }
 
@@ -90,30 +81,6 @@ class MessageFeed
                 $message->setMessageFeed(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
