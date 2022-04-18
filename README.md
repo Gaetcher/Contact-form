@@ -1,5 +1,3 @@
-# Untitled
-
 # How to install
 
 You can follow this few steps to install this project
