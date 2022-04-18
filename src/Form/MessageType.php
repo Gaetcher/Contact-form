@@ -18,6 +18,7 @@ class MessageType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => 'app.form.firstname',
+                'required' => false,
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'app.form.lastname',
@@ -27,6 +28,7 @@ class MessageType extends AbstractType
             ])
             ->add('subject', TextType::class, [
                 'label' => 'app.form.subject',
+                'required' => false,
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'app.form.message',

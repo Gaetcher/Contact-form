@@ -27,6 +27,10 @@ class WebPageController extends AbstractController
         if ($contactForm->isSubmitted() && $contactForm->isValid()) {
             $messageService->createMessage($message);
             $messageService->addMessageToFile($message);
+            
+            $this->addFlash('success','Message envoyé');
+
+            return $this->redirectToRoute('app_contact', array(), 302);
         }
 
         return $this->render('web_page/contact.html.twig', [

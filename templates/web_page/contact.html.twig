@@ -9,6 +9,16 @@
 			<div class="row">
 				<div class="col-lg-4 mx-auto">
 					<h1>Contactez-nous</h1>
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success">
+							{{ message }}
+						</div>
+					{% endfor %}
+					{% if not contactForm.vars.valid %}
+						<div class="alert alert-danger">
+							Erreur, le formulaire comporte des erreurs.
+						</div>
+					{% endif %}
 					{{ form_start(contactForm, {'attr': {'id': 'contact-form'}}) }}
 					{{ form_row(contactForm.firstname) }}
 					{{ form_row(contactForm.lastname) }}

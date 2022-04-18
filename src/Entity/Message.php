@@ -43,7 +43,7 @@ class Message
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(min=2, max=255)
+     * @Assert\Length(max=255)
      */
     private $subject;
 

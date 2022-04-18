@@ -74,17 +74,6 @@ class MessageService extends AbstractService
         }
     }
 
-    public function generateContent($message)
-    {
-        $content = [
-            'email' => $message->getEmail(),
-            'email' => $message->getEmail(),
-            'email' => $message->getEmail(),
-            'email' => $message->getEmail(),
-
-        ];
-    }
-
     public function jsonEncodeMessage($message)
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
