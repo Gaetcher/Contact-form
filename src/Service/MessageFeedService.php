@@ -2,7 +2,7 @@
 namespace App\Service;
 
 use App\Entity\MessageFeed;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\AbstractService;
 
 class MessageFeedService extends AbstractService
 {
